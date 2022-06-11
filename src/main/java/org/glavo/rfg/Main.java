@@ -14,6 +14,7 @@ public final class Main {
         while (it.hasNext()) {
             String option;
             switch (option = it.next()) {
+                case "--gui" -> options.gui = true;
                 case "-h", "-help", "--help" -> {
                     System.out.println("Please go to https://github.com/Glavo/RandomFileGenerator for help");
                     return;
@@ -27,8 +28,10 @@ public final class Main {
                 }
                 case "-d", "-directory", "--directory" -> options.dir = Path.of(readArg(option, it));
                 case "-f", "-format", "--format" -> options.format = readArg(option, it);
+                case "-o", "-output", "--output" -> options.output = Path.of(readArg(option, it));
                 case "-n", "-num-files", "--num-files" -> options.numFiles = Integer.parseInt(readArg(option, it));
-                case "-a", "--algo" -> {
+                case "-s", "-size", "--size", "-file-size", "--file-size" -> options.fileSize = FileSize.parse(readArg(option, it));
+                case "-a", "-algo", "--algo", "-algorithm", "--algorithm" -> {
                     String algo = readArg(option, it);
                     options.algo = switch (algo.toLowerCase(Locale.ROOT)) {
                         case "default", "splittable" -> RandomGeneratorFactory.of("SplittableRandom");
@@ -46,6 +49,11 @@ public final class Main {
                 }
             }
         }
+
+        if (options.gui) {
+            // TODO
+        }
+
 
     }
 
