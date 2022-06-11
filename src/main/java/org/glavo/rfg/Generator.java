@@ -15,7 +15,7 @@ import java.util.random.RandomGenerator;
 public enum Generator {
     Zero {
         @Override
-        public void generate(Path filePath, Options options, long seed, ProgressListener listener) throws IOException {
+        public void generate(Path filePath, Options options, ProgressListener listener) throws IOException {
             try (RandomAccessFile f = new RandomAccessFile(filePath.toFile(), "rw")) {
                 f.setLength(options.fileSize.toBytes());
             }
@@ -45,8 +45,8 @@ public enum Generator {
         }
 
         @Override
-        public void generate(Path filePath, Options options, long seed, ProgressListener listener) throws IOException {
-            RandomGenerator generator = options.algo.create(seed);
+        public void generate(Path filePath, Options options, ProgressListener listener) throws IOException {
+            RandomGenerator generator = options.algo.create(options.seed);
 
             ByteBuffer b = buffer.get().clear();
             byte[] arr = b.array();
@@ -78,13 +78,13 @@ public enum Generator {
         }
     };
 
-    public abstract void generate(Path filePath, Options options, long seed, ProgressListener listener) throws IOException;
+    public abstract void generate(Path filePath, Options options, ProgressListener listener) throws IOException;
 
     public static Generator fromString(String s) {
         return switch (s) {
             case "z", "zero" -> Zero;
             case "r", "random" -> Random;
-            default -> null;
+            default -> throw new IllegalArgumentException("Unknown generator: " + s);
         };
     }
 }

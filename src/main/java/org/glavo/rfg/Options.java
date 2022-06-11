@@ -5,13 +5,23 @@ import java.util.random.RandomGeneratorFactory;
 
 public final class Options {
     public boolean gui = false;
-    public Generator generator;
+    public Generator generator = Generator.Random;
     public Path dir;
     public Integer numFiles;
     public FileSize fileSize;
-    public String format;
     public RandomGeneratorFactory<?> algo;
     public Long seed;
     public Integer numThreads;
-    public Path output;
+    public String output;
+
+    public String dump() {
+        return "generator=" + generator +
+                ", dir=" + dir +
+                ", numFiles=" + numFiles +
+                ", fileSize=" + fileSize +
+                (algo == null ? "" : ", algo=" + algo.name()) +
+                ", seed=" + seed +
+                ", numThreads=" + numThreads +
+                ", output=" + output;
+    }
 }
