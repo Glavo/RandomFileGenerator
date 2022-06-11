@@ -12,7 +12,7 @@ import java.nio.file.attribute.FileAttribute;
 import java.util.Set;
 import java.util.random.RandomGenerator;
 
-public enum Generator {
+public enum Mode {
     Zero {
         @Override
         public void generate(Path filePath, Options options, ProgressListener listener) throws IOException {
@@ -80,7 +80,7 @@ public enum Generator {
 
     public abstract void generate(Path filePath, Options options, ProgressListener listener) throws IOException;
 
-    public static Generator fromString(String s) {
+    public static Mode fromString(String s) {
         return switch (s) {
             case "z", "zero" -> Zero;
             case "r", "random" -> Random;

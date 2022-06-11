@@ -5,7 +5,7 @@ import java.util.random.RandomGeneratorFactory;
 
 public final class Options {
     public boolean gui = false;
-    public Generator generator = Generator.Random;
+    public Mode mode = Mode.Random;
     public Path dir;
     public Integer numFiles;
     public FileSize fileSize;
@@ -15,7 +15,7 @@ public final class Options {
     public String output;
 
     public String dump() {
-        return "generator=" + generator +
+        return "mode=" + mode +
                 ", dir=" + dir +
                 ", numFiles=" + numFiles +
                 ", fileSize=" + fileSize +

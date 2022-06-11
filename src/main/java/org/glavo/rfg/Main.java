@@ -27,7 +27,7 @@ public final class Main {
                     System.out.println("Please go to https://github.com/Glavo/RandomFileGenerator for help");
                     return;
                 }
-                case "-g", "-generator", "--generator" -> options.generator = Generator.fromString(readArg(option, it));
+                case "-m", "-mode", "--mode" -> options.mode = Mode.fromString(readArg(option, it));
                 case "-d", "-directory", "--directory" -> options.dir = Path.of(readArg(option, it));
                 case "-o", "-output", "--output", "-output-format", "--output-format" ->
                         options.output = readArg(option, it);
@@ -69,7 +69,7 @@ public final class Main {
                 showWarnAndExit("The number of files generated must be a positive number");
             }
 
-            if (options.generator == Generator.Random && options.algo == null)
+            if (options.mode == Mode.Random && options.algo == null)
                 options.algo = RandomGeneratorFactory.of("SplittableRandom");
 
             if (options.dir == null)
@@ -111,7 +111,7 @@ public final class Main {
                 executorService.execute(() -> {
                     boolean success = false;
                     try {
-                        options.generator.generate(output, options, ProgressListener.empty);
+                        options.mode.generate(output, options, ProgressListener.empty);
                         success = true;
                     } catch (Throwable e) {
                         System.err.println("Warning: Failed to generate file '" + output + "'");
